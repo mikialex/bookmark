@@ -1,0 +1,9 @@
+{
+  "name": "bookmark",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "htmlparser": "^1.7.7"
+  }
+}
