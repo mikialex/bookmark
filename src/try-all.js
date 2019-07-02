@@ -18,18 +18,18 @@ async function tryAll(bookmarks) {
   const count = Object.keys(group).length;
   let successCount = 0;
 
-  const allrequests = Object.keys(group).map(url => {
-    return tryURL(url)
-      .then(rt => {
-        console.log(`check link success: ${url}`)
-        successCount++;
-      })
-      .catch(err => {
-        console.log(`!! check link failed, ${err.code}: ${url}`)
-    })
-  })
+  // const allrequests = Object.keys(group).map(url => {
+  //   return tryURL(url)
+  //     .then(rt => {
+  //       console.log(`check link success: ${url}`)
+  //       successCount++;
+  //     })
+  //     .catch(err => {
+  //       console.log(`!! check link failed, ${err.code}: ${url}`)
+  //   })
+  // })
 
-  await Promise.all(allrequests)
+  // await Promise.all(allrequests)
 
 
   console.log(`you have ${count} bookmarks!`)
@@ -43,6 +43,9 @@ async function tryURL(url) {
     request(
       {
         url,
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+        }
         // timeout: 30000
       },
       function (error, response, body) {

@@ -63,13 +63,18 @@ function parseChromeBookmark(bookmarkHtmlStr) {
   const root = target;
 
   function extractBookmark(parsedArray) {
-    parsedArray.forEach(item => {
+    parsedArray.forEach((item, index) => {
 
-      if (item.tagName === "DL" && item.children.length >= 2) {
-        categoryParsedInfos = item.children[0];
-        categoryName = categoryParsedInfos.children[0].text;
-        categoryAddTime = categoryParsedInfos.attribs.ADD_DATE;
-        categoryUpdateTime = categoryParsedInfos.attribs.LAST_MODIFIED;
+      if (item.tagName === "DL" && item.children.length >= 1) {
+        categoryParsedInfos = parsedArray[index - 1];
+        let categoryName ="unkown"
+        let categoryAddTime = 0
+        let categoryUpdateTime = 0
+        if (categoryParsedInfos) {
+          categoryName = categoryParsedInfos.children[0].text;
+          categoryAddTime = categoryParsedInfos.attribs.ADD_DATE;
+          categoryUpdateTime = categoryParsedInfos.attribs.LAST_MODIFIED;
+        }
         const newCategory = {
           categoryName, categoryAddTime, categoryUpdateTime,
           parent: target,
@@ -79,7 +84,7 @@ function parseChromeBookmark(bookmarkHtmlStr) {
         target.children.push(newCategory);
         target = newCategory;
 
-        const subItems = item.children.slice(1);
+        const subItems = item.children;
         if (subItems) {
           extractBookmark(subItems)
         }
